@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Bookmarklet Template</title>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
   <style>
@@ -32,19 +32,9 @@
 
   <script>
 
-    // TODO: allow links to multiple bookmarklets on the same page
-
-    ///////////////////////////////////////////////////////////////////
-    // TODO: after cloning this repo, change some/all of these values
-    //   Also, you may want to update the instructions below.
-    ///////////////////////////////////////////////////////////////////
-
-    // the name of the js file
-    var bookmarkletFilename = 'bookmarklet.js';
-    // short description of the bookmarklet
-    var bookmarkletDescription = 'bookmark thingy';
     // where on the web this will be deployed
-    var deployRoot = "https://raw.github.com/lowellk/bookmarklet-template/master/";
+    // TODO: you will want to change this
+    var deployRoot = "http://mydomain.com/foobar/";
 
     ///////////////////////////////////////////////////////////////////
     // Debug mode is for development only. Don't deploy it!
@@ -53,10 +43,10 @@
     var DEBUG = false;
 
     if (DEBUG) {
-      console.error('NOTE!! You are in debug mode.');
+      console.warn('NOTE!! You are in debug mode.');
     }
 
-    function makeBookmarklet($bookmarkletAnchor) {
+    function makeBookmarklet($bookmarkletAnchor, bookmarkletFilename) {
       var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
 
       var url = bookmarkletLocation + bookmarkletFilename;
@@ -81,16 +71,12 @@
     }
 
     $(function () {
-      // adjust the page to reflect the description
-      $('title, body > h1, .bookmarklet').html(bookmarkletDescription);
-
-      // set the href of the anchor to the js to dynamically load the bookmarklet
-      makeBookmarklet($('.bookmarklet'));
+      makeBookmarklet($('.bookmarklet'), 'bookmarklet.js');
     });
   </script>
 </head>
 <body>
-<h1></h1>
+<h1>Bookmarklet Template</h1>
 
 <h2>Instructions</h2>
 
@@ -102,6 +88,9 @@
 
 
 <h2>The bookmarklet</h2>
-Drag this to your bookmarks bar: <a class="bookmarklet">The Bookmarklet</a>
+
+<p>
+  Drag this to your bookmarks bar: <a class="bookmarklet">MyBookmarklet</a>
+</p>
 </body>
 </html>
