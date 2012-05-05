@@ -1,9 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bookmarklet to do...</title>
+  <!--
+    TODO:
+    - instructions
+    - styling
+  -->
+  <title></title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+  <style>
+    * {
+      font-family: sans-serif;
+    }
+
+    body {
+      width: 800px;
+      margin: auto;
+    }
+
+    body h1 {
+      text-decoration: underline;
+    }
+  </style>
+
+  <script class="load-script-function" type="text">
+    function(url) {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = url;
+      script.async = true;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(script, s);
+    }
+  </script>
+
+  <script>
+
+    ///////////////////////////////////////////////////////////////////
+    // TODO: after cloning this repo, change some/all of these 3 values
+    ///////////////////////////////////////////////////////////////////
+
+    var filename = 'bookmarklet.js';
+    var githubUsername = 'lowellk';
+    var githubRepoName = 'bookmarklet-template';
+    var bookmarkletDescription = 'bookmark thingy';
+
+    $(function () {
+
+      var DEBUG = false;
+
+      if (DEBUG) {
+        console.error('NOTE!! You are in debug mode.');
+      }
+
+      // adjust the page to reflect the description
+      $('title, body > h1, .bookmarklet').html(bookmarkletDescription);
+
+      var local = location.protocol == 'file:';
+
+      var bookmarkletLocation = local ? '' :
+          'https://raw.github.com/' + githubUsername + '/' + githubRepoName + '/master/';
+
+      var url = bookmarkletLocation + filename;
+
+      // get loadScript function and remove extra spaces
+      var loadScriptSrc = $('.load-script-function').html().replace(/\s\s+/g, ' ');
+
+      var $bookmarklet = $('.bookmarklet');
+
+      // warn users who try to click the bookmarklet unless in debug mode
+      $bookmarklet.click(function () {
+        if (DEBUG) {
+          return;
+        }
+        alert('To install, drag bookmarklet to your bookmarks bar.');
+        return false;
+      });
+
+      var template = 'javascript:({fn}("{url}"))();';
+      $bookmarklet.attr('href', template.replace('{fn}', loadScriptSrc).replace('{url}', url));
+    });
+  </script>
 </head>
 <body>
+<h1></h1>
 
+<h2>Instructions</h2>
+
+<p>
+  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+  type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+  essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+  passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</p>
+
+
+<h2>The bookmarklet</h2>
+Drag this to your bookmarks bar: <a href="#" class="bookmarklet">The Bookmarklet</a>
 </body>
 </html>
