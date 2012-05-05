@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    TODO:
-    - instructions
-    - styling
-  -->
   <title></title>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
@@ -38,31 +33,35 @@
   <script>
 
     ///////////////////////////////////////////////////////////////////
-    // TODO: after cloning this repo, change some/all of these 3 values
+    // TODO: after cloning this repo, change some/all of these values
+    //   Also, you may want to update the instructions below.
     ///////////////////////////////////////////////////////////////////
 
-    var filename = 'bookmarklet.js';
-    var githubUsername = 'lowellk';
-    var githubRepoName = 'bookmarklet-template';
+    // the name of the js file
+    var bookmarkletFilename = 'bookmarklet.js';
+    // short description of the bookmarklet
     var bookmarkletDescription = 'bookmark thingy';
+    // where on the web this will be deployed
+    var deployRoot = "https://raw.github.com/lowellk/bookmarklet-template/master/";
+
+    ///////////////////////////////////////////////////////////////////
+    // Debug mode is for development only. Don't deploy it!
+    ///////////////////////////////////////////////////////////////////
+
+    var DEBUG = true;
+
+    if (DEBUG) {
+      console.error('NOTE!! You are in debug mode.');
+    }
 
     $(function () {
-
-      var DEBUG = false;
-
-      if (DEBUG) {
-        console.error('NOTE!! You are in debug mode.');
-      }
 
       // adjust the page to reflect the description
       $('title, body > h1, .bookmarklet').html(bookmarkletDescription);
 
-      var local = location.protocol == 'file:';
+      var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
 
-      var bookmarkletLocation = local ? '' :
-          'https://raw.github.com/' + githubUsername + '/' + githubRepoName + '/master/';
-
-      var url = bookmarkletLocation + filename;
+      var url = bookmarkletLocation + bookmarkletFilename;
 
       // get loadScript function and remove extra spaces
       var loadScriptSrc = $('.load-script-function').html().replace(/\s\s+/g, ' ');
@@ -78,8 +77,11 @@
         return false;
       });
 
-      var template = 'javascript:({fn}("{url}"))();';
-      $bookmarklet.attr('href', template.replace('{fn}', loadScriptSrc).replace('{url}', url));
+      var template = 'javascript:({fn}("{url}?{rnd}"))();';
+      $bookmarklet.attr('href', template
+          .replace('{fn}', loadScriptSrc)
+          .replace('{url}', url)
+          .replace('{rnd}', Math.random())); // cache bust
     });
   </script>
 </head>
@@ -89,11 +91,9 @@
 <h2>Instructions</h2>
 
 <p>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-  type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-  essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-  passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  This bookmarklet is a tiny program that lives inside a browser bookmark.
+  You can add it to your browser like you'd add any ordinary bookmark.
+  And like a bookmark, click it to execute it.
 </p>
 
 
