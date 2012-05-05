@@ -10,7 +10,7 @@
     }
 
     body {
-      width: 800px;
+      width: 600px;
       margin: auto;
     }
 
@@ -32,6 +32,8 @@
 
   <script>
 
+    // TODO: allow links to multiple bookmarklets on the same page
+
     ///////////////////////////////////////////////////////////////////
     // TODO: after cloning this repo, change some/all of these values
     //   Also, you may want to update the instructions below.
@@ -48,17 +50,13 @@
     // Debug mode is for development only. Don't deploy it!
     ///////////////////////////////////////////////////////////////////
 
-    var DEBUG = true;
+    var DEBUG = false;
 
     if (DEBUG) {
       console.error('NOTE!! You are in debug mode.');
     }
 
-    $(function () {
-
-      // adjust the page to reflect the description
-      $('title, body > h1, .bookmarklet').html(bookmarkletDescription);
-
+    function makeBookmarklet($bookmarkletAnchor) {
       var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
 
       var url = bookmarkletLocation + bookmarkletFilename;
@@ -66,10 +64,8 @@
       // get loadScript function and remove extra spaces
       var loadScriptSrc = $('.load-script-function').html().replace(/\s\s+/g, ' ');
 
-      var $bookmarklet = $('.bookmarklet');
-
       // warn users who try to click the bookmarklet unless in debug mode
-      $bookmarklet.click(function () {
+      $bookmarkletAnchor.click(function () {
         if (DEBUG) {
           return;
         }
@@ -78,10 +74,18 @@
       });
 
       var template = 'javascript:({fn}("{url}?{rnd}"))();';
-      $bookmarklet.attr('href', template
+      $bookmarkletAnchor.attr('href', template
           .replace('{fn}', loadScriptSrc)
           .replace('{url}', url)
           .replace('{rnd}', Math.random())); // cache bust
+    }
+
+    $(function () {
+      // adjust the page to reflect the description
+      $('title, body > h1, .bookmarklet').html(bookmarkletDescription);
+
+      // set the href of the anchor to the js to dynamically load the bookmarklet
+      makeBookmarklet($('.bookmarklet'));
     });
   </script>
 </head>
@@ -98,6 +102,6 @@
 
 
 <h2>The bookmarklet</h2>
-Drag this to your bookmarks bar: <a href="#" class="bookmarklet">The Bookmarklet</a>
+Drag this to your bookmarks bar: <a class="bookmarklet">The Bookmarklet</a>
 </body>
 </html>
