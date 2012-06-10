@@ -19,8 +19,6 @@
   /// You can safely ignore everything below here
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
-  var labJsUrl = 'https://raw.github.com/getify/LABjs/master/LAB.min.js';
-
   // When declaring dependencies, you can save typing by using these special shortcuts to the newest versions of
   // some frameworks. For example, if your dependencies equal ['jquery'], then the newest version of jquery will
   // be used.
@@ -53,7 +51,6 @@
   }
 
   // taken from https://raw.github.com/getify/LABjs/master/LAB.min.js
-  // XXX: do we want to use this and save an http request?
   function loadLabJs() {
     /*! LAB.js (LABjs :: Loading And Blocking JavaScript)
      v2.0.3 (c) Kyle Simpson
@@ -74,24 +71,25 @@
 
   if (dependencies.length) {
     log('Loading', dependencies.length, 'dependencies:', dependencies);
-    loadScript(labJsUrl, function () {
-      //  forces all scripts in the chain to execute serially in order
-      $LAB = $LAB.setOptions({AlwaysPreserveOrder:true});
 
-      for (var i = 0; i < dependencies.length; i++) {
-        var src = dependencies[i];
-        if (src in SPECIAL_DEPENDENCIES) {
-          src = SPECIAL_DEPENDENCIES[src];
-        }
-        if (window.location.protocol === 'file:' && src.match(/^\/\//)) {
-          src = 'https:' + src;
-        }
-        $LAB = $LAB.script(src);
+    loadLabJs();
+
+    //  forces all scripts in the chain to execute serially in order
+    $LAB = $LAB.setOptions({AlwaysPreserveOrder:true});
+
+    for (var i = 0; i < dependencies.length; i++) {
+      var src = dependencies[i];
+      if (src in SPECIAL_DEPENDENCIES) {
+        src = SPECIAL_DEPENDENCIES[src];
       }
-      $LAB = $LAB.wait(function () {
-        log('Done loading dependencies.');
-        main();
-      });
+      if (window.location.protocol === 'file:' && src.match(/^\/\//)) {
+        src = 'https:' + src;
+      }
+      $LAB = $LAB.script(src);
+    }
+    $LAB = $LAB.wait(function () {
+      log('Done loading dependencies.');
+      main();
     });
   }
   else {
