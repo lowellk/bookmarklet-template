@@ -66,6 +66,12 @@
     console.warn('NOTE!! You are in debug mode.');
   }
 
+  if (location.protocol === 'file:') {
+    var message = 'You can not run this as a file:// url. Please use a web server.';
+    alert(message);
+    throw new Error(message);
+  }
+
   function makeBookmarklet($bookmarkletAnchor, bookmarkletFilename) {
     var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
 
