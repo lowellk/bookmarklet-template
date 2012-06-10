@@ -83,6 +83,9 @@
         if (src in SPECIAL_DEPENDENCIES) {
           src = SPECIAL_DEPENDENCIES[src];
         }
+        if (window.location.protocol === 'file:' && src.match(/^\/\//)) {
+          src = 'https:' + src;
+        }
         $LAB = $LAB.script(src);
       }
       $LAB = $LAB.wait(function () {
