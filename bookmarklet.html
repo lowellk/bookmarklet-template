@@ -50,12 +50,6 @@
 
 <script>
 
-  // Where on the web this will be deployed?
-  // TODO: you will want to change this.
-  // Note, if you want to use your bookmarklet on sites using ssl, you must be able to
-  // serve the bookmarklet and its dependencies via ssl.
-  var deployRoot = "//example.com/foobar/";
-
   ///////////////////////////////////////////////////////////////////
   // Debug mode is for development only. Don't deploy it!
   ///////////////////////////////////////////////////////////////////
@@ -73,7 +67,8 @@
   }
 
   function makeBookmarklet($bookmarkletAnchor, bookmarkletFilename) {
-    var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
+    // this assumes the js file is in the same folder as this file
+    var bookmarkletLocation = window.location.href.match(/.*\//)[0];
 
     var url = bookmarkletLocation + bookmarkletFilename;
 
