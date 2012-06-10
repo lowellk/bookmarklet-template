@@ -2,8 +2,6 @@
 <html>
 <head>
   <title>Bookmarklet Template</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
   <style>
     * {
       font-family: sans-serif;
@@ -18,62 +16,6 @@
       text-decoration: underline;
     }
   </style>
-
-  <script class="load-script-function" type="text">
-    function(url) {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = url;
-      script.async = true;
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(script, s);
-    }
-  </script>
-
-  <script>
-
-    // where on the web this will be deployed
-    // TODO: you will want to change this
-    var deployRoot = "http://example.com/foobar/";
-
-    ///////////////////////////////////////////////////////////////////
-    // Debug mode is for development only. Don't deploy it!
-    ///////////////////////////////////////////////////////////////////
-
-    var DEBUG = false;
-
-    if (DEBUG) {
-      console.warn('NOTE!! You are in debug mode.');
-    }
-
-    function makeBookmarklet($bookmarkletAnchor, bookmarkletFilename) {
-      var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
-
-      var url = bookmarkletLocation + bookmarkletFilename;
-
-      // get loadScript function and remove extra spaces
-      var loadScriptSrc = $('.load-script-function').html().replace(/\s\s+/g, ' ');
-
-      // warn users who try to click the bookmarklet unless in debug mode
-      $bookmarkletAnchor.click(function () {
-        if (DEBUG) {
-          return;
-        }
-        alert('To install, drag bookmarklet to your bookmarks bar.');
-        return false;
-      });
-
-      var template = 'javascript:({fn}("{url}?{rnd}"));';
-      $bookmarkletAnchor.attr('href', template
-          .replace('{fn}', loadScriptSrc)
-          .replace('{url}', url)
-          .replace('{rnd}', Math.random())); // cache bust
-    }
-
-    $(function () {
-      makeBookmarklet($('.bookmarklet'), 'bookmarklet.js');
-    });
-  </script>
 </head>
 <body>
 <h1>Bookmarklet Template</h1>
@@ -92,5 +34,65 @@
 <p>
   Drag this to your bookmarks bar: <a class="bookmarklet">MyBookmarklet</a>
 </p>
+
+<script class="load-script-function" type="text">
+  function(url) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    script.async = true;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(script, s);
+  }
+</script>
+
+<script src="//ajax.microsoft.com/ajax/jquery/jquery-1.7.2.min.js"></script>
+
+<script>
+
+  // Where on the web this will be deployed?
+  // TODO: you will want to change this.
+  // Note, if you want to use your bookmarklet on sites using ssl, you must be able to
+  // serve the bookmarklet and its dependencies via ssl.
+  var deployRoot = "//example.com/foobar/";
+
+  ///////////////////////////////////////////////////////////////////
+  // Debug mode is for development only. Don't deploy it!
+  ///////////////////////////////////////////////////////////////////
+
+  var DEBUG = false;
+
+  if (DEBUG) {
+    console.warn('NOTE!! You are in debug mode.');
+  }
+
+  function makeBookmarklet($bookmarkletAnchor, bookmarkletFilename) {
+    var bookmarkletLocation = (location.protocol == 'file:') ? '' : deployRoot;
+
+    var url = bookmarkletLocation + bookmarkletFilename;
+
+    // get loadScript function and remove extra spaces
+    var loadScriptSrc = $('.load-script-function').html().replace(/\s\s+/g, ' ');
+
+    // warn users who try to click the bookmarklet unless in debug mode
+    $bookmarkletAnchor.click(function () {
+      if (DEBUG) {
+        return;
+      }
+      alert('To install, drag bookmarklet to your bookmarks bar.');
+      return false;
+    });
+
+    var template = 'javascript:({fn}("{url}?{rnd}"));';
+    $bookmarkletAnchor.attr('href', template
+        .replace('{fn}', loadScriptSrc)
+        .replace('{url}', url)
+        .replace('{rnd}', Math.random())); // cache bust
+  }
+
+  $(function () {
+    makeBookmarklet($('.bookmarklet'), 'bookmarklet.js');
+  });
+</script>
 </body>
 </html>
