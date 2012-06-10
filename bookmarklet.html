@@ -63,7 +63,7 @@
         return false;
       });
 
-      var template = 'javascript:({fn}("{url}?{rnd}"))();';
+      var template = 'javascript:({fn}("{url}?{rnd}"));';
       $bookmarkletAnchor.attr('href', template
           .replace('{fn}', loadScriptSrc)
           .replace('{url}', url)
