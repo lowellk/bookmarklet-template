@@ -1,4 +1,3 @@
-;
 (function () {
 
   // TODO: declare any dependencies of your script here (e.g. jquery, underscore, etc...)
