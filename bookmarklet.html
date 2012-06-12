@@ -46,7 +46,7 @@
   }
 </script>
 
-<script src="https://ajax.microsoft.com/ajax/jquery/jquery-1.7.2.min.js"></script>
+<script src="//ajax.microsoft.com/ajax/jquery/jquery-1.7.2.min.js"></script>
 
 <script>
 
@@ -60,6 +60,8 @@
     console.warn('NOTE!! You are in debug mode.');
   }
 
+  // While not strictly necessary, having to deal with the page served as a file
+  // complicates the implementation past the point of it being worth it.
   if (location.protocol === 'file:') {
     var message = 'You can not run this as a file:// url. Please use a web server.';
     alert(message);
