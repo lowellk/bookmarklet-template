@@ -10,3 +10,4 @@ If anyone installs your bookmarklet and you later update the javascript file, th
 
 ## TODO
 - command line tool to upload to S3
+- tests!
