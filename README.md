@@ -11,3 +11,7 @@ If anyone installs your bookmarklet and you later update the javascript file, th
 ## TODO
 - command line tool to upload to S3
 - tests!
+- help user serve via server using http or https
+- lint
+- minfication
+- instructions for adding to a mobile browser
